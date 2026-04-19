@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С днём рождения, мама</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #fff7f2;
+            --bg-soft: #fffdfb;
+            --ink: #4f3140;
+            --muted: #8c6372;
+            --accent: #d96b87;
+            --accent-deep: #b84e6a;
+            --gold: #f1c57a;
+            --card: rgba(255, 255, 255, 0.72);
+            --border: rgba(188, 101, 126, 0.16);
+            --shadow: 0 24px 60px rgba(143, 74, 96, 0.14);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top left, rgba(255, 205, 216, 0.9), transparent 34%),
+                radial-gradient(circle at 85% 15%, rgba(255, 233, 185, 0.85), transparent 24%),
+                linear-gradient(180deg, #fff8f3 0%, #fff3f0 42%, #fffaf7 100%);
+            overflow-x: hidden;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            inset: auto;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.44), transparent 68%);
+            pointer-events: none;
+            filter: blur(4px);
+            z-index: 0;
+        }
+
+        body::before {
+            top: -60px;
+            right: -100px;
+        }
+
+        body::after {
+            bottom: 8%;
+            left: -120px;
+        }
+
+        .hearts-rain {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            top: -12vh;
+            color: rgba(217, 107, 135, 0.72);
+            font-size: clamp(1.1rem, 2vw, 1.8rem);
+            text-shadow: 0 6px 18px rgba(217, 107, 135, 0.2);
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            will-change: transform;
+        }
+
+        .heart:nth-child(1)  { left: 4%;  animation-duration: 12s; animation-delay: -2s; }
+        .heart:nth-child(2)  { left: 10%; animation-duration: 16s; animation-delay: -8s; }
+        .heart:nth-child(3)  { left: 18%; animation-duration: 14s; animation-delay: -5s; }
+        .heart:nth-child(4)  { left: 26%; animation-duration: 18s; animation-delay: -11s; }
+        .heart:nth-child(5)  { left: 34%; animation-duration: 13s; animation-delay: -4s; }
+        .heart:nth-child(6)  { left: 42%; animation-duration: 17s; animation-delay: -9s; }
+        .heart:nth-child(7)  { left: 50%; animation-duration: 15s; animation-delay: -6s; }
+        .heart:nth-child(8)  { left: 58%; animation-duration: 19s; animation-delay: -13s; }
+        .heart:nth-child(9)  { left: 66%; animation-duration: 14s; animation-delay: -7s; }
+        .heart:nth-child(10) { left: 74%; animation-duration: 16s; animation-delay: -10s; }
+        .heart:nth-child(11) { left: 82%; animation-duration: 13s; animation-delay: -3s; }
+        .heart:nth-child(12) { left: 90%; animation-duration: 18s; animation-delay: -12s; }
+
+        .hero,
+        section,
+        footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero {
+            min-height: 100vh;
+            padding: 32px 20px 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-shell {
+            width: min(1120px, 100%);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(255, 247, 244, 0.58));
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: var(--shadow);
+            border-radius: 36px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+        }
+
+        .hero-copy {
+            padding: 72px 64px;
+            position: relative;
+            min-width: 0;
+        }
+
+        .hero-copy::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(241, 197, 122, 0.34), transparent 68%);
+            top: 24px;
+            right: 24px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(217, 107, 135, 0.1);
+            color: var(--accent-deep);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .hero h1,
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .hero h1 {
+            font-size: clamp(3.2rem, 7vw, 5.6rem);
+            line-height: 0.92;
+            margin-bottom: 18px;
+            color: #6a3647;
+        }
+
+        .hero p {
+            max-width: 560px;
+            font-size: 1.08rem;
+            line-height: 1.8;
+            color: var(--muted);
+        }
+
+        .hero-note {
+            margin-top: 26px;
+            padding-left: 18px;
+            border-left: 3px solid rgba(217, 107, 135, 0.35);
+            color: #7f5564;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 34px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 14px 28px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #f08ba3);
+            color: #fff;
+            box-shadow: 0 16px 32px rgba(217, 107, 135, 0.24);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--accent-deep);
+            border: 1px solid rgba(217, 107, 135, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .hero-visual {
+            position: relative;
+            min-height: 560px;
+            background:
+                linear-gradient(180deg, rgba(255, 233, 238, 0.9), rgba(255, 248, 244, 0.55)),
+                radial-gradient(circle at top, rgba(255, 216, 164, 0.85), transparent 30%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 36px;
+            min-width: 0;
+        }
+
+        .portrait-frame {
+            position: relative;
+            width: min(380px, 100%);
+            aspect-ratio: 4 / 5;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 26px 54px rgba(149, 88, 106, 0.18);
+            border: 10px solid rgba(255, 255, 255, 0.8);
+            transform: rotate(4deg);
+        }
+
+        .portrait-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .floating-tag {
+            position: absolute;
+            padding: 12px 18px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.86);
+            box-shadow: 0 14px 30px rgba(147, 84, 102, 0.12);
+            color: #875366;
+            font-weight: 700;
+        }
+
+        .tag-top {
+            top: 70px;
+            left: 24px;
+        }
+
+        .tag-bottom {
+            right: 24px;
+            bottom: 72px;
+        }
+
+        section {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 36px 0 68px;
+        }
+
+        .section-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 34px;
+            padding-inline: 8px;
+        }
+
+        h2 {
+            font-size: clamp(2.4rem, 5vw, 3.4rem);
+            margin-bottom: 12px;
+            color: #743b4f;
+        }
+
+        .section-intro p {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .card {
+            background: var(--card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+        }
+
+        .letter-card {
+            padding: 34px 30px;
+            line-height: 1.9;
+            font-size: 1.05rem;
+            overflow-wrap: anywhere;
+        }
+
+        .letter-card p + p {
+            margin-top: 18px;
+        }
+
+        .signature {
+            margin-top: 18px;
+            color: var(--accent-deep);
+            font-weight: 700;
+        }
+
+        .grid {
+            display: grid;
+            gap: 22px;
+        }
+
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        }
+
+        .gallery-card {
+            padding: 14px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 28px 60px rgba(143, 74, 96, 0.18);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 290px;
+            object-fit: cover;
+            border-radius: 20px;
+            display: block;
+        }
+
+        .gallery-card p {
+            padding: 14px 8px 4px;
+            font-weight: 600;
+            color: #7d5564;
+        }
+
+        .love-grid,
+        .coupon-grid {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .pill-card {
+            padding: 24px 22px;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: left;
+            font-weight: 700;
+            line-height: 1.55;
+            color: #714051;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 244, 241, 0.72));
+            transition: transform 0.25s ease, border-color 0.25s ease;
+            overflow-wrap: anywhere;
+        }
+
+        .pill-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(217, 107, 135, 0.28);
+        }
+
+        .coupon-card {
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .coupon-card span {
+            font-size: 2rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 36px 20px 54px;
+            color: #7d5161;
+        }
+
+        .footer-box {
+            width: min(900px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 24px;
+            border-radius: 28px 28px 0 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,245,241,0.92));
+            border: 1px solid rgba(217, 107, 135, 0.14);
+            box-shadow: 0 -16px 40px rgba(146, 83, 102, 0.08);
+        }
+
+        .footer-box strong {
+            display: block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 8px;
+            color: #6d3a4b;
+        }
+
+        @media (max-width: 1100px) {
+            .hero {
+                min-height: auto;
+            }
+
+            .hero-shell {
+                grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
+            }
+
+            .hero-copy {
+                padding: 56px 42px;
+            }
+
+            .hero-visual {
+                min-height: 500px;
+            }
+
+            .love-grid,
+            .coupon-grid {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-copy {
+                padding: 54px 28px 26px;
+            }
+
+            .hero-visual {
+                min-height: 420px;
+                padding: 24px 24px 34px;
+            }
+
+            .portrait-frame {
+                width: min(320px, 86%);
+                transform: rotate(0deg);
+            }
+
+            .gallery-grid,
+            .love-grid,
+            .coupon-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .tag-top {
+                top: 24px;
+                left: 18px;
+            }
+
+            .tag-bottom {
+                right: 18px;
+                bottom: 28px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding: 18px 14px 54px;
+            }
+
+            .hero-shell {
+                border-radius: 28px;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+                line-height: 0.98;
+            }
+
+            .hero p,
+            .letter-card {
+                font-size: 1rem;
+            }
+
+            .eyebrow {
+                font-size: 0.76rem;
+                letter-spacing: 0.03em;
+            }
+
+            .hero-copy {
+                padding: 42px 20px 22px;
+            }
+
+            .hero-note {
+                margin-top: 18px;
+                padding-left: 14px;
+            }
+
+            .hero-actions {
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 14px 18px;
+            }
+
+            .hero-visual {
+                min-height: 340px;
+                padding: 18px 18px 26px;
+            }
+
+            .portrait-frame {
+                width: min(280px, 88%);
+                border-width: 8px;
+                border-radius: 26px;
+            }
+
+            section {
+                width: min(1120px, calc(100% - 24px));
+                padding: 28px 0 54px;
+            }
+
+            h2 {
+                font-size: 2.2rem;
+            }
+
+            .section-intro {
+                margin-bottom: 24px;
+            }
+
+            .card {
+                border-radius: 22px;
+            }
+
+            .letter-card {
+                padding: 24px 18px;
+                line-height: 1.75;
+            }
+
+            .gallery-grid,
+            .love-grid,
+            .coupon-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .pill-card {
+                min-height: auto;
+                padding: 18px 16px;
+                font-size: 0.98rem;
+            }
+
+            .floating-tag {
+                font-size: 0.88rem;
+                padding: 10px 14px;
+            }
+
+            .tag-top,
+            .tag-bottom {
+                position: static;
+            }
+
+            .hero-visual {
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .gallery-card img {
+                height: 250px;
+            }
+
+            .footer-box {
+                width: min(900px, calc(100% - 20px));
+                padding: 20px 16px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .hero h1 {
+                font-size: 2.35rem;
+            }
+
+            .hero p {
+                line-height: 1.65;
+            }
+
+            .floating-tag {
+                width: 100%;
+                text-align: center;
+            }
+
+            .gallery-card {
+                padding: 10px;
+            }
+
+            .gallery-card img {
+                height: 220px;
+            }
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translate3d(0, -10vh, 0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate3d(18px, 115vh, 0) rotate(24deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-rain" aria-hidden="true">
+        <span class="heart">🎀</span>
+        <span class="heart">💓</span>
+        <span class="heart">💞</span>
+        <span class="heart">💗</span>
+        <span class="heart">💓</span>
+        <span class="heart">🎀</span>
+        <span class="heart">💞</span>
+        <span class="heart">💗</span>
+        <span class="heart">🎀</span>
+        <span class="heart">💓</span>
+        <span class="heart">💞</span>
+        <span class="heart">💗</span>
+    </div>
+
+    <div class="hero">
+        <div class="hero-shell">
+            <div class="hero-copy">
+                <div class="eyebrow">Для самой любимой мамы</div>
+                <h1>С днём рождения,<br>мама</h1>
+                <p>
+                    Этот маленький сайт - как открытка с самыми тёплыми словами,
+                    воспоминаниями и любовью, которую не всегда получается сказать вслух.
+                </p>
+                <p class="hero-note">
+                    Пусть в твоём дне будет много улыбок, спокойствия, заботы и ощущения,
+                    что ты очень дорога и любима.
+                </p>
+
+                <div class="hero-actions">
+                    <button class="btn btn-primary" onclick="document.getElementById('start').scrollIntoView({behavior:'smooth'})">
+                        Открыть поздравление
+                    </button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('memories').scrollIntoView({behavior:'smooth'})">
+                        Посмотреть фото
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="floating-tag tag-top">Свет, доброта и забота</div>
+                <div class="portrait-frame">
+                    <img src="photo5.jpg" alt="Любимая мама">
+                </div>
+                <div class="floating-tag tag-bottom">Самый родной человек</div>
+            </div>
+        </div>
+    </div>
+
+    <section id="start">
+        <div class="section-intro">
+            <h2>Письмо тебе</h2>
+            <p>Самая важная часть этого подарка - слова, которые идут прямо от сердца.</p>
+        </div>
+        <div class="card letter-card">
+            <p>
+                Мама,
+                спасибо тебе за тепло, которое ты даришь каждый день, за поддержку,
+                терпение и доброту. Рядом с тобой всегда спокойнее, потому что ты умеешь
+                согреть даже одним словом и одним взглядом.
+            </p>
+            <p>
+                Я очень ценю всё, что ты делаешь для меня, и хочу, чтобы ты чаще
+                чувствовала, как сильно тебя любят. Пусть этот день принесёт тебе
+                радость, нежность, красивые моменты и исполнение самых добрых желаний.
+            </p>
+            <p>
+                <b><i>стихотворение, которое я написала для тебя:</i></b>
+            </p>
+            <p>
+                Ты — мой дом, даже когда я далеко,
+                даже когда внутри всё не так легко.
+                Ты умеешь молчать так, что становится тише,
+                и я рядом с тобой будто чуть выше.</p>
+
+             <p>Я не всегда умею это сказать,
+                иногда проще закрыться и промолчать.
+                Но в каждом моём “всё нормально, поверь”
+                есть ты — как тихая, прочная дверь.</p>
+
+             <p>Ты видела мои слабости без прикрас,
+                и всё равно оставалась со мной каждый раз.
+                Даже когда я сама себя не люблю —
+                ты как будто держишь меня на краю.</p>
+
+            <p>И если когда-нибудь я стану сильней,
+              это будет от твоих бессонных ночей.
+              От слов, что ты говорила не зря —
+            “я рядом, я с тобой, я твоя”.</p>
+            <p class="signature">С любовью и благодарностью.</p>
+        </div>
+    </section>
+
+    <section id="memories">
+        <div class="section-intro">
+            <h2>Наши воспоминания</h2>
+            <p>Немного моментов, к которым всегда хочется возвращаться снова и снова.</p>
+        </div>
+        <div class="grid gallery-grid">
+            <div class="card gallery-card">
+                <img src="photo1.jpg" alt="Тёплый семейный момент">
+                <p>Самые любимые кадры</p>
+            </div>
+            <div class="card gallery-card">
+                <img src="photo2.jpg" alt="Семейное фото">
+                <p>Улыбки, которые хочется помнить</p>
+            </div>
+            <div class="card gallery-card">
+                <img src="photo3.jpg" alt="Прекрасный момент вместе">
+                <p>Нежные воспоминания</p>
+            </div>
+            <div class="card gallery-card">
+                <img src="photo4.jpg" alt="Праздничное фото">
+                <p>Счастливые мгновения рядом</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-intro">
+            <h2>39 причин, почему я люблю тебя</h2>
+            <p>Здесь собраны самые тёплые и важные причины, за которые я люблю тебя всем сердцем</p>
+        </div>
+        <div class="grid love-grid">
+            <div class="card pill-card">Ты самый родной для меня человек.</div>
+            <div class="card pill-card">Ты всегда поддерживаешь мои идеи.</div>
+            <div class="card pill-card">Ты знаешь, что сказать в любой ситуации.</div>
+            <div class="card pill-card">Ты научила меня ценить эту жизнь.</div>
+            <div class="card pill-card">Ты помогаешь мне становиться сильнее.</div>
+            <div class="card pill-card">Ты всегда улыбаешься мне при встрече.</div>
+            <div class="card pill-card">Ты показываешь пример того, каким человеком стоит быть.</div>
+            <div class="card pill-card">Ты всегда понимаешь меня.</div>
+            <div class="card pill-card">Ты никогда не предашь.</div>
+            <div class="card pill-card">Ты желаешь мне добра.</div>
+            <div class="card pill-card">Ты вкуснее всех готовишь пирожки с картошкой.</div>
+            <div class="card pill-card">Ты не ложилась спать, пока я не приду домой.</div>
+            <div class="card pill-card">За добрые слова.</div>
+            <div class="card pill-card">За мудрость.</div>
+            <div class="card pill-card">За поддержку.</div>
+            <div class="card pill-card">За наставления.</div>
+            <div class="card pill-card">За то, что всегда спрашиваешь: «поела ли я».</div>
+            <div class="card pill-card">За теплоту.</div>
+            <div class="card pill-card">Потому что гладила мою рубашку каждое утро, чтобы я поспала на 5 минут дольше.</div>
+            <div class="card pill-card">За самый вкусный чай в мире.</div>
+            <div class="card pill-card">За возможность узнать, что такое настоящие семейные ценности.</div>
+            <div class="card pill-card">За правильное воспитание.</div>
+            <div class="card pill-card">За понимание.</div>
+            <div class="card pill-card">За уютный дом, куда всегда хочется возвращаться.</div>
+            <div class="card pill-card">За пирожки, которые ты пекла по воскресеньям.</div>
+            <div class="card pill-card">За походы в кино.</div>
+            <div class="card pill-card">За то, что не ругала, когда я постригла сама себе челку.</div>
+            <div class="card pill-card">За то, что всегда защищала, даже если знала, что я неправа.</div>
+            <div class="card pill-card">За мудрость, которая передалась мне от тебя.</div>
+            <div class="card pill-card">За любовь к домашним животным.</div>
+            <div class="card pill-card">За уроки танцев, которые ты мне преподала перед походом на выпускной.</div>
+            <div class="card pill-card">За самый модный пенал в классе, который стоил половину твоей зарплаты.</div>
+            <div class="card pill-card">За атмосферу в доме, которую хочется повторить у себя.</div>
+            <div class="card pill-card">За умение подобрать нужные слова для каждого случая.</div>
+            <div class="card pill-card">Потому что она понимает меня без слов.</div>
+            <div class="card pill-card">Потому что ей не важно, как я выгляжу, сколько зарабатываю, где живу. Имеет значение только: поела я или нет…</div>
+            <div class="card pill-card">Потому что она всегда помогает мне.</div>
+            <div class="card pill-card">Потому что она знает, как утешить меня.</div>
+            <div class="card pill-card">Потому что она очень добрая.</div>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-intro">
+            <h2>Маленькие купоны</h2>
+            <p>Приятные обещания, которые можно использовать в любой день.</p>
+        </div>
+        <div class="grid coupon-grid">
+            <div class="card pill-card coupon-card"><span>☕</span>Чай или кофе вместе</div>
+            <div class="card pill-card coupon-card"><span>🧹</span>Помощь по дому без просьб</div>
+            <div class="card pill-card coupon-card"><span>🤗</span>Обнимашки в любой момент</div>
+            <div class="card pill-card coupon-card"><span>🎀</span>Вечер отдыха</div>
+            <div class="card pill-card coupon-card"><span>🍳</span>Завтрак, который я приготовлю сама</div>
+            <div class="card pill-card coupon-card"><span>🧹</span>Уборка без напоминаний 😄</div>
+            <div class="card pill-card coupon-card"><span>🍽</span>Я беру на себя кухню на день</div>
+            <div class="card pill-card coupon-card"><span>🍃</span>Прогулка вместе в любое время</div>
+            <div class="card pill-card coupon-card"><span>🎬</span>Совместный фильм (выбираешь ты!)</div>
+            <div class="card pill-card coupon-card"><span>💌</span>Искренний разговор по душам</div>
+            <div class="card pill-card coupon-card"><span>💖</span>День без спешки - только отдых</div>
+            <div class="card pill-card coupon-card"><span>💆🏻‍♀️</span>Массаж или релакс-вечер от меня</div>
+            <div class="card pill-card coupon-card"><span>🫶</span>Я тебя выслушаю - без перебивания</div>
+            <div class="card pill-card coupon-card"><span>✨</span>Комплименты весь день</div>
+            <div class="card pill-card coupon-card"><span>🍰</span>Сладкий сюрприз без повода</div>
+            <div class="card pill-card coupon-card"><span>📸</span>День новых воспоминаний и фото вместе</div>
+            <div class="card pill-card coupon-card"><span>🎁</span>Сюрприз-день от меня</div>
+            <div class="card pill-card coupon-card"><span>😇</span>Один день без моих капризов</div>
+            <div class="card pill-card coupon-card"><span>🤍</span>Я всегда на твоей стороне</div>
+            <div class="card pill-card coupon-card"><span>🧘🏻‍♀️</span>Совместный новый опыт - то, что мы ещё не пробовали</div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-box">
+            <strong>Я тебя очень люблю</strong>
+            <p>Пусть этот год будет для тебя добрым, светлым и счастливым.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
